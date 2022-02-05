@@ -29,6 +29,8 @@ const App = () => {
       const account = accounts[0]
       console.log("Found an authorized account", account);
       setCurrentAccount(account)
+
+      setupEventListener() 
     }else{
       console.log("No authorized account found");
     }
@@ -47,13 +49,36 @@ const App = () => {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0])
+
+      setupEventListener() 
+    }catch (error){
+      console.log(error);
+    }
+  }
+
+  const setupEventListener = async () => {
+    try{
+      const {ethereum} = window;
+
+      if(ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+
+        connectedContract,on("NewEpicNFTMinted", (from, tokenId) => {
+          console.log(from, tokenId.toNumber());
+          alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`)
+        })
+      }else{
+        console.log("Ethereum object doesn't exist");
+      }
     }catch (error){
       console.log(error);
     }
   }
 
   const askContractToMintNFT = async () => {
-    const CONTRACT_ADDRESS = "0xF5014a8daD4fa08Ab4AE50285a40940915CB6fFE";
+    const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
 
     try{
       const {ethereum} = window;
@@ -63,13 +88,41 @@ const App = () => {
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
 
-        console.log("Going to pop wallet now to pay gas...");
-        let nftTxn = await connectedContract.makeAnEpicNFT();
+        const max = await connectedContract.getTotalNFTsMintedSoFar();
 
-        console.log("Mining... please wait.");
-        await nftTxn.wait();
+        if(max < 5){
+          console.log("Going to pop wallet now to pay gas...");
+          let nftTxn = await connectedContract.makeAnEpicNFT();
 
-        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+          console.log("Mining... please wait.");
+          await nftTxn.wait();
+
+          console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+        }else{
+          throw new Error("NFT minted already maxed.");
+        }
+      }else{
+        console.log("Ethereum object doesn't exist!");
+      }
+    }catch (error){
+      console.log(error);
+    }
+  }
+
+  const checkTotal = async () => {
+    const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
+
+    try{
+      const {ethereum} = window;
+
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+
+        let howMany = await connectedContract.getTotalNFTsMintedSoFar();
+
+        console.log(howMany);
       }else{
         console.log("Ethereum object doesn't exist!");
       }
@@ -99,9 +152,15 @@ const App = () => {
           </p>
 
           {currentAccount === "" ? renderNotConnectedContainer() : (
-            <button onClick={askContractToMintNFT} className="cta-button connect-wallet-button">
-              Mint NFT
-            </button>
+            <>
+              <button onClick={askContractToMintNFT} className="cta-button connect-wallet-button">
+                Mint NFT
+              </button>
+
+              <button onClick={checkTotal} className="cta-button connect-wallet-button">
+                CHECK!
+              </button>
+            </>
           )}
 
         </div>
