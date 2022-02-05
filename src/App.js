@@ -35,6 +35,7 @@ const App = () => {
     const rinkebyChainId = "0x4"; 
     if (chainId !== rinkebyChainId) {
       alert("You are not connected to the Rinkeby Test Network!");
+      return;
     }
 
     if(accounts.length !== 0){
@@ -65,6 +66,7 @@ const App = () => {
       const rinkebyChainId = "0x4"; 
       if (chainId !== rinkebyChainId) {
         alert("You are not connected to the Rinkeby Test Network!");
+        return;
       }
       
       console.log("Connected", accounts[0]);
@@ -140,8 +142,7 @@ const App = () => {
 
         let howMany = await connectedContract.getTotalNFTsMintedSoFar();
 
-        console.log(typeof howMany);
-        console.log(parseInt(howMany));
+        alert(`${parseInt(howMany)} already minted. Mint yours now!`)
       }else{
         console.log("Ethereum object doesn't exist!");
       }
