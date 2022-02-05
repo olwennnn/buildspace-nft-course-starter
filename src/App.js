@@ -15,6 +15,7 @@ const CONTRACT_ADDRESS = "0x02e4649909FC742398fc9eae14b1230CE9f37DFf";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [stat, setStat] = useState("ok")
   // Render Methods
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -27,6 +28,14 @@ const App = () => {
     }
 
     const accounts = await ethereum.request({method: 'eth_accounts'})
+    let chainId = await ethereum.request({ method: 'eth_chainId' });
+    console.log("Connected to chain " + chainId);
+
+    // String, hex code of the chainId of the Rinkebey test network
+    const rinkebyChainId = "0x4"; 
+    if (chainId !== rinkebyChainId) {
+      alert("You are not connected to the Rinkeby Test Network!");
+    }
 
     if(accounts.length !== 0){
       const account = accounts[0]
@@ -49,7 +58,15 @@ const App = () => {
       }
       
       const accounts = await ethereum.request({method: "eth_requestAccounts"});
+      let chainId = await ethereum.request({ method: 'eth_chainId' });
+      console.log("Connected to chain " + chainId);
 
+      // String, hex code of the chainId of the Rinkebey test network
+      const rinkebyChainId = "0x4"; 
+      if (chainId !== rinkebyChainId) {
+        alert("You are not connected to the Rinkeby Test Network!");
+      }
+      
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0])
 
@@ -96,7 +113,9 @@ const App = () => {
           let nftTxn = await connectedContract.makeAnEpicNFT();
 
           console.log("Mining... please wait.");
+          setStat('wait')
           await nftTxn.wait();
+          setStat('ok')
 
           console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
         }else{
@@ -153,9 +172,13 @@ const App = () => {
 
           {currentAccount === "" ? renderNotConnectedContainer() : (
             <>
+              {stat === 'ok' ? (
               <button onClick={askContractToMintNFT} className="cta-button connect-wallet-button">
                 Mint NFT
-              </button>
+              </button>) : (
+              <button className="cta-button connect-wallet-button" disabled>
+                Waiting...
+              </button>)}
               <br/>
               <br/>
               <button onClick={checkTotal} className="cta-button connect-wallet-button">
