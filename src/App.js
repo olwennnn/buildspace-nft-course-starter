@@ -11,7 +11,7 @@ const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-isgbet1zj
 const TOTAL_MINT_COUNT = 10;
 
 
-const CONTRACT_ADDRESS = "0x02e4649909FC742398fc9eae14b1230CE9f37DFf";
+const CONTRACT_ADDRESS = "0xA68c9ce7533126BEb78EB46cF920418Ec99ca5D3";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
