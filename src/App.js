@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 // Constants
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = '';
+const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-isgbet1zjc';
 const TOTAL_MINT_COUNT = 10;
 
 
@@ -132,23 +132,7 @@ const App = () => {
   }
 
   const checkTotal = async () => {
-    try{
-      const {ethereum} = window;
-
-      if(ethereum){
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
-
-        let howMany = await connectedContract.getTotalNFTsMintedSoFar();
-
-        alert(`${parseInt(howMany)} already minted. Mint yours now!`)
-      }else{
-        console.log("Ethereum object doesn't exist!");
-      }
-    }catch (error){
-      console.log(error);
-    }
+    window.open(OPENSEA_LINK)
   }
 
   const renderNotConnectedContainer = () => (
