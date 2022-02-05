@@ -2,6 +2,7 @@ import './styles/App.css';
 import twitterLogo from './assets/twitter-logo.svg';
 import React, { useEffect, useState } from "react";
 import myEpicNft from './utils/MyEpicNFT.json'
+import { ethers } from "ethers";
 
 // Constants
 const TWITTER_HANDLE = '_buildspace';
@@ -58,7 +59,7 @@ const App = () => {
       const {ethereum} = window;
 
       if(ethereum){
-        const provider = new ether.providers.Web3Provider(ethereum);
+        const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
 
