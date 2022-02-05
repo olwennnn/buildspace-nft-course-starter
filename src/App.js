@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 // Constants
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-isgbet1zjc';
+const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-8dmbxihydz';
 const TOTAL_MINT_COUNT = 10;
 
 
