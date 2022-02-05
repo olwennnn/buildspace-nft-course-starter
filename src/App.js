@@ -121,7 +121,7 @@ const App = () => {
 
         let howMany = await connectedContract.getTotalNFTsMintedSoFar();
 
-        console.log(howMany);
+        console.log(typeof howMany);
       }else{
         console.log("Ethereum object doesn't exist!");
       }
