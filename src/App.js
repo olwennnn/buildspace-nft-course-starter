@@ -8,7 +8,7 @@ import { ethers } from "ethers";
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
-const TOTAL_MINT_COUNT = 5;
+const TOTAL_MINT_COUNT = 10;
 
 
 const CONTRACT_ADDRESS = "0x02e4649909FC742398fc9eae14b1230CE9f37DFf";
