@@ -11,7 +11,7 @@ const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 5;
 
 
-const CONTRACT_ADDRESS = "0xFb0EC4F0dd4C0c508260a796ca6c8fC8f29C641F";
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -155,7 +155,7 @@ const App = () => {
               <button onClick={askContractToMintNFT} className="cta-button connect-wallet-button">
                 Mint NFT
               </button>
-
+              <br/>
               <button onClick={checkTotal} className="cta-button connect-wallet-button">
                 CHECK!
               </button>
