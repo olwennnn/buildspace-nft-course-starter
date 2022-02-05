@@ -11,7 +11,7 @@ const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 5;
 
 
-const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
+const CONTRACT_ADDRESS = "0xFb0EC4F0dd4C0c508260a796ca6c8fC8f29C641F";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
