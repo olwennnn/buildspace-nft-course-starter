@@ -8,7 +8,10 @@ import { ethers } from "ethers";
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
-const TOTAL_MINT_COUNT = 50;
+const TOTAL_MINT_COUNT = 5;
+
+
+const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -78,8 +81,6 @@ const App = () => {
   }
 
   const askContractToMintNFT = async () => {
-    const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
-
     try{
       const {ethereum} = window;
 
@@ -90,7 +91,7 @@ const App = () => {
 
         const max = await connectedContract.getTotalNFTsMintedSoFar();
 
-        if(max < 5){
+        if(max < TOTAL_MINT_COUNT){
           console.log("Going to pop wallet now to pay gas...");
           let nftTxn = await connectedContract.makeAnEpicNFT();
 
@@ -110,8 +111,6 @@ const App = () => {
   }
 
   const checkTotal = async () => {
-    const CONTRACT_ADDRESS = "0x32385A2E31725c37f01677FB35702743f2f396f3";
-
     try{
       const {ethereum} = window;
 
