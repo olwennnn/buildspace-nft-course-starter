@@ -91,7 +91,7 @@ const App = () => {
 
         const max = await connectedContract.getTotalNFTsMintedSoFar();
 
-        if(max < TOTAL_MINT_COUNT){
+        if(parseInt(max) < TOTAL_MINT_COUNT){
           console.log("Going to pop wallet now to pay gas...");
           let nftTxn = await connectedContract.makeAnEpicNFT();
 
@@ -122,6 +122,7 @@ const App = () => {
         let howMany = await connectedContract.getTotalNFTsMintedSoFar();
 
         console.log(typeof howMany);
+        console.log(parseInt(howMany));
       }else{
         console.log("Ethereum object doesn't exist!");
       }
